@@ -12,68 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style2.css">
    
-    <script language="VB" runat="server">
-
-        'Load the conversion rate file
-        Public Function getConversionRate(ByVal sFromCurr _
-               As String, ByVal sToCurr As String) As Double
-         Dim req As HttpWebRequest
-         Dim res As HttpWebResponse
-         Dim srExRateData As StreamReader
-         Dim sExRateData As String
-         Dim separator As Char() = ","
-         Dim dRate = 0, dRate1, dRate2 As Double
-         Dim oExRateData As System.Xml.XmlDocument
-      
-         Const sExRateSource As String = _
-           "http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml"
-      
-         Try
-          oExRateData = New System.Xml.XmlDocument
-          srExRateData = New _
-            StreamReader(WebRequest.Create(sExRateSource)_
-            .GetResponse().GetResponseStream(), _
-            Encoding.ASCII)
-          oExRateData.Load(srExRateData)
-          srExRateData.Close()
-          dRate1 = getEuroRate(oExRateData, sFromCurr)
-          dRate2 = getEuroRate(oExRateData, sToCurr)
-          dRate = dRate2 / dRate1
-         Catch
-         End Try
-         Return dRate
-        End Function
-      
-        'Get a rate note from the xml
-        Function getEuroRate(ByRef oExRateData As _
-          System.Xml.XmlDocument, ByVal sCurr As String) As Double
-      
-         Dim oExRateNode As System.Xml.XmlNode
-      
-         oExRateNode = oExRateData.SelectSingleNode("*/*/*/*[@currency='"_
-                                                      + sCurr + "']/@rate")
-         If Not oExRateNode Is Nothing Then
-           Return CDbl(oExRateNode.Value)
-         Else
-           Return 1
-         End If
-        End Function
-      
-       'Return the price
-       Public Function PrintPrice(ByVal dPrice As Double, _
-          ByVal dRate As Double, ByVal sCurr As String) As String
-      
-        Dim sReturn as string 
-      
-        if sCurr="USD" then sCurr="$US"
-        if not sCurr="" then
-          sReturn = (dRate * dPrice).ToString("#") & sCurr & "<sup>*</sup>  "
-        end if
-        sReturn += "GB£" & dPrice 
-        return sReturn
-       End Function
-      
-      </script>
+    
 
 <style>
   nav{
@@ -476,7 +415,7 @@ html {
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="ini.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
               </li>
             <li class="nav-item">
               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
